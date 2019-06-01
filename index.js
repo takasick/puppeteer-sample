@@ -107,13 +107,15 @@ const puppeteer = require('puppeteer');
         console.log(`REDIRECT COUNT: ${response.request().redirectChain().length}`);
       }
 
-      const elements = await page.$$('p');
-      for (let i = 0, l = elements.length; i < l; ++i) {
-        const element = elements[i];
-        const prop = await element.getProperty('textContent');
-        const msg = await prop.jsonValue();
+      // List all Links
+      const hrefs = await page.evaluate((selector) => {
+        const elements = Array.from(document.getElementsByTagName(selector));
+        return elements.map(elm => elm.href);
+      }, 'a');
 
-        console.error(`${msg}`);
+      for (let i = 0, l = hrefs.length; i < l; ++i) {
+        const val = hrefs[i];
+        console.error(`${val}`);
       }
 
       /* screenshot
