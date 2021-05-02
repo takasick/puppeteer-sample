@@ -10,6 +10,7 @@ const puppeteer = require('puppeteer');
     headless: false,
     devtools: false,
     ignoreHTTPSErrors: true,
+    defaultViewport: null,
     args: [
       '--disable-gpu',
       '--ignore-certificate-errors',
@@ -86,8 +87,6 @@ const puppeteer = require('puppeteer');
   page.on('pageerror', (err) => {
     console.error(`SCRIPT ERROR: ${err.toString()}`);
   });
-
-  await page.setViewport({ width: 1024, height: 768 });
 
   // device emulate
   // await page.emulate(puppeteer.devices['iPhone 6']);
